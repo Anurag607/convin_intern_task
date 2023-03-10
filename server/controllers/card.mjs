@@ -1,4 +1,4 @@
-import { Card } from '../models/Cards.mjs'
+import { Card } from '../models/card.mjs'
 
 const createCard = async (req, res) => {
     try {

@@ -12,10 +12,10 @@ dotenv.config({ path: envPath });
 const PORT = process.env.PORT
 
 const app = express();
-express.use(cors());
+app.use(cors());
 app.use(morgan('dev'))
-express.use(express.json());
-express.use(express.urlencoded({ extended: true }))
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
 
 connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
@@ -28,5 +28,5 @@ app.use('/api/buckets', bucketRoutes)
 app.use('/api/cards', cardRoutes)
 
 app.listen(PORT, () => {
-    console.log(`Server running on ${process.env.RENDER}`)
+    console.log(`Server running on ${process.env.LOCALHOST_SERVER}`)
 })

@@ -18,3 +18,5 @@ router.post('/createCard', createCard)
 router.put('/updateCard/:id', updateCard)
 router.delete('/deleteCard/:id', deleteCard)
 router.get('/getCardbyBucketId/:id', getCardbyBucketId)
+
+export default router

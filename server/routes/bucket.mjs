@@ -16,9 +16,11 @@ router.use((req, res, next) => {
     next()
 })
 
-router.Bucket('/createBucket', createBucket)
+router.post('/createBucket', createBucket)
 router.put('/updateBucket/:id', updateBucket)
 router.delete('/deleteBucket/:id', deleteBucket)
 router.get('/getAll', getAllBuckets)
 router.get('/getBucket/:id', getOneBucket)
 router.get('/getUsersBuckets/:id', getAllBucketbyUserId)
+
+export default router

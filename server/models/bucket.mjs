@@ -16,4 +16,4 @@ const BucketSchema = new mongoose.Schema({
 
 const Bucket = mongoose.model("Bucket", BucketSchema)
 
-export { User }
+export { Bucket }

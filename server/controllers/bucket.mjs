@@ -1,4 +1,4 @@
-import { Bucket } from '../models/Buckets.mjs'
+import { Bucket } from '../models/bucket.mjs'
 
 const createBucket = async (req, res) => {
     try {
