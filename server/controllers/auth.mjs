@@ -3,8 +3,8 @@ import bcrypt from 'bcryptjs'
 
 const registerUser = async (req, res) => {
     try {
-        const confirm = await User.find({ Username: req.body.username, email: req.body.email })
-        if (confirm.length > 0) res.status(400).json('this user or email exist')
+        const confirm = await User.find({ username: req.body.username, email: req.body.email })
+        if (confirm.length > 0) res.status(400).json({ message: 'this user or email exist' })
         const salt = await bcrypt.genSalt(10);
         const hashedPass = await bcrypt.hash(req.body.password, salt)
 
@@ -30,11 +30,11 @@ const registerUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
     try {
-        const user = await User.findOne({ username: req.body.username })
-        !user && res.status(400).json('wrong user')
+        const user = await User.findOne({ email: req.body.email })
+        !user && res.status(400).json({ message: 'wrong user' })
 
         const validate = await bcrypt.compare(req.body.password, user.password)
-        !validate && res.status(400).json('wrong password')
+        !validate && res.status(400).json({ message: 'wrong password' })
 
         const { password, ...others } = user._doc
 
