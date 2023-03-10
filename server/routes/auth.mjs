@@ -1,0 +1,15 @@
+import express from 'express'
+import morgan from 'morgan'
+import { registerUser, loginUser } from '../controllers/auth.mjs'
+
+const router = express.Router()
+router.use(morgan('dev'))
+router.use((req, res, next) => {
+    console.log("Auth Router Running!")
+    next()
+})
+
+router.post('/register', registerUser)
+router.post('/login', loginUser)
+
+export default router
