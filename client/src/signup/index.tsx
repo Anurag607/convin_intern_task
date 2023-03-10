@@ -3,7 +3,6 @@
 import React from "react";
 import styles from "./style.module.scss";
 import { useNavigate, Link } from "react-router-dom";
-import bcrypt from "bcryptjs";
 
 interface SignupForm extends HTMLFormControlsCollection {
   username: HTMLInputElement;
@@ -27,19 +26,8 @@ const Login = () => {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    let auth: template = JSON.parse(
-      localStorage.getItem("auth") || '{ "email" : "", "password" : "" }'
-    );
-    // bcrypt.compare(
-    //   import.meta.env.VITE_PASSWORD,
-    //   auth.password,
-    //   function (err: any, isMatch: boolean) {
-    //     if (err) throw err;
-    //     else if (isMatch && auth.email === import.meta.env.VITE_email) {
-    //     }
-    //   }
-    //   );
-    if (auth.email.length > 0 && auth.password.length > 0) {
+    let auth = JSON.parse(localStorage.getItem("auth") || "{}");
+    if (auth.hasOwnProperty("email") && auth.email.length > 0) {
       navigate(`/home`, { replace: false });
     }
   }, []);
@@ -86,7 +74,7 @@ const Login = () => {
   const HandleSubmit = (e: React.FormEvent<SignupFormEl>) => {
     e.preventDefault();
     let status = 200;
-    fetch(`${import.meta.env.VITE_LOCALHOST_SERVER}/register`, {
+    fetch(`${import.meta.env.VITE_LOCALHOST_SERVER}/api/auth/register`, {
       method: "POST",
       mode: "cors",
       headers: { "Content-Type": "application/json" },
@@ -102,12 +90,7 @@ const Login = () => {
           styling.email.current!.style.borderColor = "red";
           styling.pass.current!.style.borderColor = "red";
         } else {
-          const hashedPass = bcrypt.hashSync(signupdet.password, 10);
-          let data = {
-            email: signupdet.email,
-            password: hashedPass,
-          };
-          localStorage.setItem("auth", JSON.stringify(data));
+          localStorage.setItem("auth", JSON.stringify(resMessage));
           navigate(`/home`, { replace: false });
         }
       });
@@ -116,7 +99,7 @@ const Login = () => {
   return (
     <main className={styles.signupWrapper}>
       <form onSubmit={HandleSubmit}>
-        <h2>Log in</h2>
+        <h2>Sign Up</h2>
         <span className={styles.warning} ref={styling.warning}>
           Email Id or Username is already in use!
         </span>
@@ -124,7 +107,7 @@ const Login = () => {
           <label htmlFor="username"> username </label>
           <input
             className={styles.signupUsername}
-            value={signupdet.email}
+            value={signupdet.username}
             onChange={HandleChange}
             name="username"
             ref={styling.email}

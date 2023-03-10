@@ -40,6 +40,8 @@
                 color: #344054;
                 font-size: 1.075rem;
                 font-family: 'Inter', sans-serif;
+                text-transform: capitalize;
+                cursor: default;
             }
             .signupUsername, .signupEmail, .signupPass {
                 font-family: 'Inter', sans-serif;
@@ -49,8 +51,12 @@
                 width: 20rem;
                 height: auto;
                 padding: 0.65rem 1.25rem 0.65rem 0.65rem;
+                cursor: text;
             }
-            .signupUsername:focus, .signupEmail, .signupPass:focus {
+            .signupUsername {
+                text-transform: capitalize;
+            }
+            .signupUsername:focus, .signupEmail:focus, .signupPass:focus {
                 border-color: #34CB65;
             }
         }
@@ -72,8 +78,9 @@
         @include flex(row, 0.5rem);
         font-family: 'Poppins';
         font-size: 0.85rem;
-        color: #e8e8e8;
+        color: #c5c5c5;
         a {
+            font-weight: bold;
             color: #34CB65 !important;
         }
     }

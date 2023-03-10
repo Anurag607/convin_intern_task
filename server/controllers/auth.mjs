@@ -8,19 +8,20 @@ const registerUser = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPass = await bcrypt.hash(req.body.password, salt)
 
-        const savedUserCred = await new User({
+        const savedUserCred = new User({
             username: req.body.username,
             email: req.body.email,
             password: hashedPass
         })
 
-        await savedUserCred.save(function (err, result) {
-            if (err) {
-                console.error(err.message)
-                res.status(500).end()
-            }
-            res.status(200).json(result)
-        })
+        try {
+            const result = await savedUserCred.save()
+            const { password, ...others } = result._doc
+            res.status(200).json(others)
+        } catch (err) {
+            console.error(err.message)
+            res.status(500).end()
+        }
 
     } catch (error) {
         console.error(error.message)
