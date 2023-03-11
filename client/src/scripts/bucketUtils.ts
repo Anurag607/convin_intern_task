@@ -4,15 +4,12 @@ const updateBucket = (
 ) => {
   try {
     let status = 200;
-    fetch(
-      `${import.meta.env.VITE_LOCALHOST_SERVER}/api/buckets/updateBucket/${id}`,
-      {
-        method: "PUT",
-        mode: "cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      }
-    ).then((response) => {
+    fetch(`${import.meta.env.VITE_RENDER}/api/buckets/updateBucket/${id}`, {
+      method: "PUT",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    }).then((response) => {
       status = response.status;
       if (status === 200) window.location.reload();
     });
@@ -27,15 +24,12 @@ const deleteBucket = (
 ) => {
   try {
     let status = 200;
-    fetch(
-      `${import.meta.env.VITE_LOCALHOST_SERVER}/api/buckets/deleteBucket/${id}`,
-      {
-        method: "DELETE",
-        mode: "cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      }
-    ).then((response) => {
+    fetch(`${import.meta.env.VITE_RENDER}/api/buckets/deleteBucket/${id}`, {
+      method: "DELETE",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    }).then((response) => {
       status = response.status;
       if (status === 200) window.location.reload();
     });

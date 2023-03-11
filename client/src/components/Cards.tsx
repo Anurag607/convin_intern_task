@@ -26,6 +26,7 @@ import { setUrl, openIFrame } from "../redux/iframe";
 import { setCurrentBucketData, setCurrentCardData } from "../redux/currentData";
 import { setHistory } from "../redux/history";
 
+// Custom props type for cards
 type propTypes = {
   type?: string;
   data: any;
@@ -34,9 +35,11 @@ type propTypes = {
   currentHistory?: any;
 };
 
+// Bucket Card Component
 const BucketCard = (props: propTypes) => {
   return (
     <div className={styles["bucket-card"]}>
+      {/* Card Content */}
       <header>
         <a target="_blank" href="#">
           <img
@@ -47,11 +50,10 @@ const BucketCard = (props: propTypes) => {
           <h1>{props.data.bucketName}</h1>
         </a>
       </header>
-
       <div className={styles["bucket-bio"]}>
         <p>{props.data.bucketDetails}</p>
       </div>
-
+      {/* Card Buttons (CRUD Actions) */}
       <ul className={styles["bucket-buttons"]}>
         <Button
           onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
@@ -88,10 +90,12 @@ const BucketCard = (props: propTypes) => {
   );
 };
 
+// Video Card Component
 const MediaCard = (props: propTypes) => {
   return (
     <Card sx={{ display: "flex", gap: 3.5 }}>
       <Box sx={{ display: "flex", flexDirection: "column" }}>
+        {/* Card Content */}
         <CardContent sx={{ flex: "1 0 auto" }}>
           <Typography width="auto " variant="h5" textTransform="capitalize">
             {props.data.cardName.length > 20
@@ -107,6 +111,7 @@ const MediaCard = (props: propTypes) => {
             {props.data.cardDetails}
           </Typography>
         </CardContent>
+        {/* Card Buttons (CRUD Actions) */}
         <Box sx={{ display: "flex", alignItems: "center", pl: 1, pb: 1 }}>
           <IconButton
             aria-label="delete"
@@ -155,6 +160,7 @@ const MediaCard = (props: propTypes) => {
           </IconButton>
         </Box>
       </Box>
+      {/* Card Image */}
       <CardMedia
         component="img"
         sx={{ width: 250, height: 155.75 }}
@@ -170,6 +176,7 @@ const Cards = (props: propTypes) => {
   const dispatch = useDispatch();
   const { history } = useSelector((state: any) => state.currentHistory);
 
+  // Function for rendering cards based on type
   const CardRenderer = () => {
     switch (props.type) {
       case "bucket": {

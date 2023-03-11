@@ -10,15 +10,12 @@ const updateCard = (
 ) => {
   try {
     let status = 200;
-    fetch(
-      `${import.meta.env.VITE_LOCALHOST_SERVER}/api/cards/updateCard/${id}`,
-      {
-        method: "PUT",
-        mode: "cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      }
-    ).then((response) => {
+    fetch(`${import.meta.env.VITE_RENDER}/api/cards/updateCard/${id}`, {
+      method: "PUT",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    }).then((response) => {
       status = response.status;
       if (status === 200) window.location.reload();
     });
@@ -39,15 +36,12 @@ const deleteCard = (
 ) => {
   try {
     let status = 200;
-    fetch(
-      `${import.meta.env.VITE_LOCALHOST_SERVER}/api/cards/deleteCard/${id}`,
-      {
-        method: "DELETE",
-        mode: "cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      }
-    ).then((response) => {
+    fetch(`${import.meta.env.VITE_RENDER}/api/cards/deleteCard/${id}`, {
+      method: "DELETE",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    }).then((response) => {
       status = response.status;
       if (status === 200) window.location.reload();
     });

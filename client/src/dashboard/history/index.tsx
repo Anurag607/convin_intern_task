@@ -1,13 +1,14 @@
 import React from "react";
 import Header from "../../components/Header";
 import Cards from "../../components/Cards";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import IFrame from "../../components/Iframe";
 
 const History = () => {
   const { history } = useSelector((state: any) => state.currentHistory);
 
+  // Placeholder component when the watch history is empty
   const Placeholder = () => {
     return (
       <Typography width="100%" variant="h4" textTransform="capitalize">
@@ -42,6 +43,7 @@ const History = () => {
           ) : (
             history.map((el: any, i: number) => {
               return (
+                // Previously played video cards are rendered here...
                 <div
                   style={{
                     display: "flex",
@@ -49,6 +51,7 @@ const History = () => {
                     gap: "0.5rem",
                   }}
                 >
+                  {/* Time the video was played on */}
                   <Typography
                     component={"div"}
                     variant="h6"
@@ -64,6 +67,7 @@ const History = () => {
                         el.playedOn.getSeconds()}
                     </span>
                   </Typography>
+                  {/* Card */}
                   <Cards key={i} type="card" data={el} />
                 </div>
               );

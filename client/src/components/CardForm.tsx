@@ -32,6 +32,7 @@ const UpdateCardForm = () => {
     dispatch(closeCardForm());
   };
 
+  // Function for handling input change
   const HandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let target = e.currentTarget;
     switch (target.name) {
@@ -80,6 +81,7 @@ const UpdateCardForm = () => {
   return (
     <Box m="20px">
       <Dialog open={isCardFormOpen} onClose={handleClose}>
+        {/* Form */}
         <DialogTitle>Update Card</DialogTitle>
         <DialogContent>
           <TextField
@@ -135,6 +137,7 @@ const UpdateCardForm = () => {
             onChange={HandleChange}
           />
         </DialogContent>
+        {/* Form Buttons (CRUD Actions) */}
         <DialogActions>
           <Button onClick={() => dispatch(setCurrentCardData(placeholder))}>
             Clear

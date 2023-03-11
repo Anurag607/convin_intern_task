@@ -30,6 +30,7 @@ const UpdateForm = (props: any) => {
     dispatch(closeForm());
   };
 
+  // Function for handling input change
   const HandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let target = e.currentTarget;
     switch (target.name) {
@@ -60,6 +61,7 @@ const UpdateForm = (props: any) => {
   return (
     <Box m="20px">
       <Dialog open={isOpen} onClose={handleClose}>
+        {/* Form */}
         <DialogTitle>Update Bucket</DialogTitle>
         <DialogContent>
           <TextField
@@ -89,6 +91,7 @@ const UpdateForm = (props: any) => {
             onChange={HandleChange}
           />
         </DialogContent>
+        {/* Form Buttons (CRUD Actions) */}
         <DialogActions>
           <Button onClick={() => dispatch(setCurrentBucketData(placeholder))}>
             Clear

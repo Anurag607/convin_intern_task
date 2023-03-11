@@ -4,17 +4,17 @@ import React from "react";
 import styles from "./style.module.scss";
 import { useNavigate, Link } from "react-router-dom";
 
+// Custom interface for Login form
 interface LoginForm extends HTMLFormControlsCollection {
   email: HTMLInputElement;
   password: HTMLInputElement;
 }
-
 interface LoginFormEl extends HTMLFormElement {
   readonly elements: LoginForm;
 }
-
 type template = { email: string; password: string };
 
+// Main Login component is rendered here...
 const Login = () => {
   const [logindet, Setlogindet] = React.useState<template>({
     email: "",
@@ -23,6 +23,7 @@ const Login = () => {
 
   const navigate = useNavigate();
 
+  // Function to check if use is already logged in...
   React.useEffect(() => {
     let auth = JSON.parse(localStorage.getItem("auth") || "{}");
     if (auth.hasOwnProperty("email") && auth.email.length > 0) {
@@ -30,12 +31,14 @@ const Login = () => {
     }
   }, []);
 
+  // Ref object for styling form components...
   const styling = {
     email: React.useRef<HTMLInputElement>(null),
     pass: React.useRef<HTMLInputElement>(null),
     warning: React.useRef<HTMLSpanElement>(null),
   };
 
+  // Function for handling input change...
   const HandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let target = e.currentTarget;
     switch (target.name) {
@@ -62,10 +65,11 @@ const Login = () => {
     }
   };
 
+  // Function for handling form submit...
   const HandleSubmit = (e: React.FormEvent<LoginFormEl>) => {
     e.preventDefault();
     let status = 200;
-    fetch(`${import.meta.env.VITE_LOCALHOST_SERVER}/api/auth/login`, {
+    fetch(`${import.meta.env.VITE_RENDER}/api/auth/login`, {
       method: "POST",
       mode: "cors",
       headers: { "Content-Type": "application/json" },

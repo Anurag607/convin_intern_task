@@ -16,12 +16,12 @@ import {
   GridColDef,
   GridAddIcon,
   GridRenderCellParams,
-  GridRowParams,
 } from "@mui/x-data-grid";
 import { useSelector, useDispatch } from "react-redux";
 import { closeGrid } from "../redux/openGridSlice";
 import Cards from "../components/Cards";
 
+// Styling attr. for the warning block...
 const styles = {
   warning: {
     display: "none",
@@ -36,6 +36,7 @@ const styles = {
   },
 };
 
+// Defining the data grid columns...
 const columns: GridColDef[] = [
   { field: "id", headerName: "", width: 0 },
   {
@@ -50,6 +51,7 @@ const columns: GridColDef[] = [
   },
 ];
 
+// Styling attr. for modal inline component (Fade)...
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -68,12 +70,12 @@ const style = {
   gap: "1rem",
 };
 
+// Main Card Data Grid is rendered here...
 export default function CardDataGrid() {
   const [auth, setAuth] = React.useState(
     JSON.parse(localStorage.getItem("auth") || "{}")
   );
   const { isGridOpen } = useSelector((state: any) => state.openGrid);
-  const { cardId } = useSelector((state: any) => state.currentCard);
   const { bucketId } = useSelector((state: any) => state.currentBucket);
   const dispatch = useDispatch();
   const handleClose = () => {
@@ -88,19 +90,22 @@ export default function CardDataGrid() {
   const [open, setOpen] = React.useState(false);
   const warning = React.useRef<HTMLSpanElement>(null);
 
+  // Function for opening the add card form...
   const handleClickOpen = () => {
     setOpen(true);
   };
 
+  // Function for closing the add card form...
   const CloseForm = () => {
     setOpen(false);
   };
 
+  // Function to get all cards in the selected bucket...
   const getCardList = () => {
     let data: any = [];
     fetch(
       `${
-        import.meta.env.VITE_LOCALHOST_SERVER
+        import.meta.env.VITE_RENDER
       }/api/cards/getCardbyBucketId/${bucketId.trim()}`,
       {
         method: "GET",
@@ -116,12 +121,14 @@ export default function CardDataGrid() {
       .catch((err) => console.error(err.message));
   };
 
+  // Runs getCardList whenever new bucket is selected...
   React.useEffect(() => {
     if (bucketId && bucketId.length > 0) {
       getCardList();
     }
   }, [bucketId]);
 
+  // Function for handling input change...
   const HandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let target = e.currentTarget;
     switch (target.name) {
@@ -155,6 +162,7 @@ export default function CardDataGrid() {
     }
   };
 
+  // Function for handling form submit...
   const HandleSubmit = () => {
     let data = {
       userId: auth._id.trim(),
@@ -164,7 +172,7 @@ export default function CardDataGrid() {
       bucketName: bucketId.trim(),
     };
     let status = 200;
-    fetch(`${import.meta.env.VITE_LOCALHOST_SERVER}/api/cards/createCard`, {
+    fetch(`${import.meta.env.VITE_RENDER}/api/cards/createCard`, {
       method: "POST",
       mode: "cors",
       headers: { "Content-Type": "application/json" },
@@ -207,6 +215,7 @@ export default function CardDataGrid() {
       >
         <Fade in={isGridOpen}>
           <Box sx={style}>
+            {/* DataGrid Component for rendering the video cards */}
             <DataGrid
               rows={cards}
               getRowId={(row) => row._id}
@@ -223,6 +232,7 @@ export default function CardDataGrid() {
               checkboxSelection
               disableRowSelectionOnClick
             />
+            {/* FAB button for adding new video card */}
             <Button
               variant="contained"
               aria-label="add-card"
@@ -232,7 +242,9 @@ export default function CardDataGrid() {
               <GridAddIcon />
               Add Card
             </Button>
+            {/* Form for adding new video card */}
             <Dialog open={open} onClose={handleClose}>
+              {/* Form */}
               <DialogTitle>New Card</DialogTitle>
               <DialogContent>
                 <span style={styles.warning} ref={warning}>
@@ -278,6 +290,7 @@ export default function CardDataGrid() {
                   onChange={HandleChange}
                 />
               </DialogContent>
+              {/* Form buttons (CRUD Actions) */}
               <DialogActions>
                 <Button
                   onClick={() =>

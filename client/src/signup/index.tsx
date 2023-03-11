@@ -4,19 +4,19 @@ import React from "react";
 import styles from "./style.module.scss";
 import { useNavigate, Link } from "react-router-dom";
 
+// Custom interface for Signup form
 interface SignupForm extends HTMLFormControlsCollection {
   username: HTMLInputElement;
   email: HTMLInputElement;
   password: HTMLInputElement;
 }
-
 interface SignupFormEl extends HTMLFormElement {
   readonly elements: SignupForm;
 }
-
 type template = { username: string; email: string; password: string };
 
-const Login = () => {
+// Main Sign up component is rendered here...
+const Register = () => {
   const [signupdet, Setsignupdet] = React.useState<template>({
     username: "",
     email: "",
@@ -25,6 +25,7 @@ const Login = () => {
 
   const navigate = useNavigate();
 
+  // Function to check if use is already logged in...
   React.useEffect(() => {
     let auth = JSON.parse(localStorage.getItem("auth") || "{}");
     if (auth.hasOwnProperty("email") && auth.email.length > 0) {
@@ -32,12 +33,14 @@ const Login = () => {
     }
   }, []);
 
+  // Ref object for styling form components...
   const styling = {
     email: React.useRef<HTMLInputElement>(null),
     pass: React.useRef<HTMLInputElement>(null),
     warning: React.useRef<HTMLSpanElement>(null),
   };
 
+  // Function for handling input change...
   const HandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let target = e.currentTarget;
     switch (target.name) {
@@ -71,10 +74,11 @@ const Login = () => {
     }
   };
 
+  // Function for handling form submit...
   const HandleSubmit = (e: React.FormEvent<SignupFormEl>) => {
     e.preventDefault();
     let status = 200;
-    fetch(`${import.meta.env.VITE_LOCALHOST_SERVER}/api/auth/register`, {
+    fetch(`${import.meta.env.VITE_RENDER}/api/auth/register`, {
       method: "POST",
       mode: "cors",
       headers: { "Content-Type": "application/json" },
@@ -184,4 +188,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

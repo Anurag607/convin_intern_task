@@ -29,6 +29,7 @@ import {
 
 import { useNavigate } from "react-router-dom";
 
+// Custom Item Component for rendering sidebar menu items...
 const Item = ({
   title,
   to,
@@ -69,6 +70,7 @@ const Item = ({
   );
 };
 
+// Main Sidebar is rendered here...
 const Sidebar = () => {
   const theme = useTheme();
   const colors = colorTokens(theme.palette.mode);
@@ -78,6 +80,7 @@ const Sidebar = () => {
   const [selected, setSelected] = useState("Dashboard");
   const navigate = useNavigate();
 
+  // Function for logging out the user...
   const Logout = () => {
     localStorage.removeItem("auth");
     navigate("/");
@@ -104,6 +107,7 @@ const Sidebar = () => {
         }}
       >
         <Menu>
+          {/* Sidebar header (title + collapse button) */}
           <MenuItem
             onClick={() => collapseSidebar()}
             icon={collapsed ? <MenuOutlined /> : undefined}
@@ -131,6 +135,7 @@ const Sidebar = () => {
             )}
           </MenuItem>
 
+          {/* Sidebar body (dashboard menu items) */}
           <Box>
             <Item
               title="Dashboard"

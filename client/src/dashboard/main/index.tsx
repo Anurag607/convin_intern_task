@@ -17,6 +17,7 @@ import UpdateCardForm from "../../components/CardForm";
 import CardDataGrid from "../../components/DataGrid";
 import IFrame from "../../components/Iframe";
 
+// Styling attr. for the warning block...
 const styles = {
   warning: {
     display: "none",
@@ -31,6 +32,7 @@ const styles = {
   },
 };
 
+// Main dashboard component is rendered here...
 const Dashboard = () => {
   const [auth, setAuth] = React.useState(
     JSON.parse(localStorage.getItem("auth") || "{}")
@@ -43,20 +45,20 @@ const Dashboard = () => {
   const [open, setOpen] = React.useState(false);
   const warning = React.useRef<HTMLSpanElement>(null);
 
+  // Function for opening the add bucket form...
   const handleClickOpen = () => {
     setOpen(true);
   };
-
+  // Function for closing the add bucket form...
   const handleClose = () => {
     setOpen(false);
   };
 
+  // Function to get all the user's buckets...
   const getBucketList = () => {
     let data: any = [];
     fetch(
-      `${import.meta.env.VITE_LOCALHOST_SERVER}/api/buckets/getUsersBuckets/${
-        auth._id
-      }`,
+      `${import.meta.env.VITE_RENDER}/api/buckets/getUsersBuckets/${auth._id}`,
       {
         method: "GET",
         mode: "cors",
@@ -71,10 +73,12 @@ const Dashboard = () => {
       .catch((err) => console.error(err.message));
   };
 
+  // Function for running getBucketList whenever the dashboard re-renders...
   React.useEffect(() => {
     getBucketList();
   }, []);
 
+  // Function for handling input change...
   const HandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let target = e.currentTarget;
     switch (target.name) {
@@ -101,6 +105,7 @@ const Dashboard = () => {
     }
   };
 
+  // Function for handling form submit...
   const HandleSubmit = () => {
     let data = {
       userId: auth._id.trim(),
@@ -108,7 +113,7 @@ const Dashboard = () => {
       bucketDetails: bucketDetails.details.trim(),
     };
     let status = 200;
-    fetch(`${import.meta.env.VITE_LOCALHOST_SERVER}/api/buckets/createBucket`, {
+    fetch(`${import.meta.env.VITE_RENDER}/api/buckets/createBucket`, {
       method: "POST",
       mode: "cors",
       headers: { "Content-Type": "application/json" },
@@ -147,6 +152,7 @@ const Dashboard = () => {
           title="DASHBOARD"
           subTitle={`Welcome ${auth.username || ""}!`}
         />
+        {/* Bucket List is rendered here */}
         <Box
           display="flex"
           flexDirection="row"
@@ -162,6 +168,7 @@ const Dashboard = () => {
           })}
         </Box>
       </Box>
+      {/* FAB button for adding new bucket */}
       <Fab
         color="secondary"
         aria-label="add-bucket"
@@ -170,8 +177,10 @@ const Dashboard = () => {
       >
         <AddIcon sx={{ color: "#ffffff" }} />
       </Fab>
+      {/* Form for adding new bucket */}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>New Bucket</DialogTitle>
+        {/* Form */}
         <DialogContent>
           <span style={styles.warning} ref={warning}>
             Bucket with this name already in use!
@@ -203,6 +212,7 @@ const Dashboard = () => {
             onChange={HandleChange}
           />
         </DialogContent>
+        {/* Form buttons (CRUD Actions) */}
         <DialogActions>
           <Button
             onClick={() =>
@@ -224,9 +234,13 @@ const Dashboard = () => {
           </Button>
         </DialogActions>
       </Dialog>
+      {/* Bucket Form Component */}
       <UpdateForm />
+      {/* Card Datagrid Component */}
       <CardDataGrid />
+      {/* Card Form Component */}
       <UpdateCardForm />
+      {/* Video IFram Component */}
       <IFrame />
     </Box>
   );
