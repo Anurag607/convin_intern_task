@@ -19,7 +19,10 @@ import {
 } from "@mui/x-data-grid";
 import { useSelector, useDispatch } from "react-redux";
 import { closeGrid } from "../redux/openGridSlice";
+import { setRowList, clearRowList } from "../redux/rowSelection";
 import Cards from "../components/Cards";
+import { Delete } from "@mui/icons-material";
+import { deleteManyCard } from "../scripts/cardUtils";
 
 // Styling attr. for the warning block...
 const styles = {
@@ -77,6 +80,7 @@ export default function CardDataGrid() {
   );
   const { isGridOpen } = useSelector((state: any) => state.openGrid);
   const { bucketId } = useSelector((state: any) => state.currentBucket);
+  const { rowList } = useSelector((state: any) => state.selectedRowList);
   const dispatch = useDispatch();
   const handleClose = () => {
     dispatch(closeGrid());
@@ -198,6 +202,11 @@ export default function CardDataGrid() {
       .catch((err) => console.error(err.message));
   };
 
+  const handleDelete = () => {
+    deleteManyCard(rowList);
+    dispatch(clearRowList());
+  };
+
   return (
     <div>
       <Modal
@@ -219,6 +228,13 @@ export default function CardDataGrid() {
             <DataGrid
               rows={cards}
               getRowId={(row) => row._id}
+              onRowSelectionModelChange={(ids: any) => {
+                const selectedIDs = new Set(ids);
+                let selectedRowData = cards.filter((el: any) =>
+                  selectedIDs.has(el._id)
+                );
+                dispatch(setRowList([...rowList, ...selectedRowData]));
+              }}
               rowHeight={138}
               columns={columns}
               initialState={{
@@ -233,15 +249,26 @@ export default function CardDataGrid() {
               disableRowSelectionOnClick
             />
             {/* FAB button for adding new video card */}
-            <Button
-              variant="contained"
-              aria-label="add-card"
-              sx={{ gap: 1, backgroundColor: "#3da58a" }}
-              onClick={handleClickOpen}
-            >
-              <GridAddIcon />
-              Add Card
-            </Button>
+            <Box display="flex" gap={5}>
+              <Button
+                variant="contained"
+                aria-label="add-card"
+                sx={{ gap: 1, backgroundColor: "#3da58a" }}
+                onClick={handleClickOpen}
+              >
+                <GridAddIcon />
+                Add Card
+              </Button>
+              <Button
+                variant="contained"
+                aria-label="add-card"
+                sx={{ gap: 1, backgroundColor: "#3da58a" }}
+                onClick={handleDelete}
+              >
+                <Delete />
+                Delete
+              </Button>
+            </Box>
             {/* Form for adding new video card */}
             <Dialog open={open} onClose={handleClose}>
               {/* Form */}

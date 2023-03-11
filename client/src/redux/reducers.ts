@@ -7,6 +7,7 @@ import currentCardSlice from "./currentCardSlice";
 import openIFrame from "./iframe";
 import currentData from "./currentData";
 import historySlice from "./history";
+import rowListSlice from "./rowSelection";
 
 export default combineReducers({
   openForm: openFormReducer,
@@ -17,4 +18,5 @@ export default combineReducers({
   openiframe: openIFrame,
   currentData: currentData,
   currentHistory: historySlice,
+  selectedRowList: rowListSlice,
 });
