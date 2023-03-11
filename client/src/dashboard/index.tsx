@@ -20,7 +20,7 @@ function App() {
             <main className="content">
               <Topbar />
               <Routes>
-                <Route path="/main" element={<BucketList />} />
+                <Route path="/" element={<BucketList />} />
                 <Route path="/history" element={<History />} />
               </Routes>
             </main>
