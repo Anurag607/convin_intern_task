@@ -4,13 +4,18 @@ const CardSchema = new mongoose.Schema({
     cardName: {
         type: String,
         required: true,
+        unique: true
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
-    bucket_id: {
-        type: mongoose.Schema.Types.ObjectId,
+    bucketName: {
+        type: String,
+        required: true
+    },
+    cardUrl: {
+        type: String,
         required: true
     },
     cardDetails: {

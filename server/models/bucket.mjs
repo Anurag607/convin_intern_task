@@ -4,6 +4,7 @@ const BucketSchema = new mongoose.Schema({
     bucketName: {
         type: String,
         required: true,
+        unique: true
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,

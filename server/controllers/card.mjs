@@ -2,7 +2,9 @@ import { Card } from '../models/card.mjs'
 
 const createCard = async (req, res) => {
     try {
-        const saveCard = await new Card(req.body)
+        const confirm = await Card.find({ cardName: req.body.cardName })
+        if (confirm.length > 0) res.status(400).json({ message: 'this card exist' })
+        const saveCard = new Card(req.body)
         const savedCard = await saveCard.save()
         res.status(200).json(savedCard)
 
@@ -14,9 +16,9 @@ const createCard = async (req, res) => {
 
 const updateCard = async (req, res) => {
     try {
-        const Card = await Bucket.findById(req.params.id)
-        if (Bucket.userId === req.body.userId) {
-            await Bucket.updateOne({ $set: req.body })
+        const CardList = await Card.findById(req.params.id)
+        if (CardList.userId.valueOf() === req.body.userId) {
+            await Card.updateOne({ cardName: CardList.cardName }, { $set: req.body })
             res.status(200).json({ message: 'the Card is updated' })
         } else {
             res.status(403).json({ message: 'you can only update your Card' })
@@ -30,9 +32,9 @@ const updateCard = async (req, res) => {
 
 const deleteCard = async (req, res) => {
     try {
-        const Card = await Card.findById(req.params.id)
-        if (Card.userId === req.body.userId) {
-            await Card.delete()
+        const CardList = await Card.findById(req.params.id)
+        if (CardList.userId.valueOf() === req.body.userId) {
+            await Card.deleteOne({ bucketName: req.body.bucketName });
             res.status(200).json({ message: 'the Card is deleted' })
         } else {
             res.status(403).json({ message: 'you can only delete your Card' })
@@ -45,8 +47,8 @@ const deleteCard = async (req, res) => {
 
 const getCardbyBucketId = async (req, res) => {
     try {
-        const Card = await Card.find({ bucket_id: req.params.id })
-        res.status(200).json(Card)
+        const CardList = await Card.find({ bucketName: req.params.id })
+        res.status(200).json(CardList)
 
     } catch (error) {
         console.error(error.message)

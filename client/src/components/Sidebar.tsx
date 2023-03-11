@@ -22,9 +22,7 @@ import { colorTokens } from "../theme";
 
 import {
   HomeOutlined,
-  CalendarTodayOutlined,
-  NotesOutlined,
-  SettingsOutlined,
+  HistoryOutlined,
   MenuOutlined,
   LogoutOutlined,
 } from "@mui/icons-material";
@@ -138,6 +136,14 @@ const Sidebar = () => {
               title="Dashboard"
               to="/home/main"
               icon={(<HomeOutlined />) as any}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Divider />
+            <Item
+              title="History"
+              to="/home/history"
+              icon={(<HistoryOutlined />) as any}
               selected={selected}
               setSelected={setSelected}
             />

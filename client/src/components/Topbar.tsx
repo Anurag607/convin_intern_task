@@ -7,28 +7,14 @@ import {
   DarkModeOutlined,
   SettingsOutlined,
   PersonOutlined,
-  Search,
 } from "@mui/icons-material";
 
 const Topbar = () => {
   const theme = useTheme();
-  const colors = colorTokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
 
   return (
-    <Box display="flex" justifyContent="space-between" p={2}>
-      {/* Search bar */}
-      <Box
-        display="flex"
-        borderRadius="3px"
-        sx={{ backgroundColor: `${colors.primary[400]}` }}
-      >
-        <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" />
-        <IconButton type="button" sx={{ p: 1 }}>
-          <Search />
-        </IconButton>
-      </Box>
-
+    <Box display="flex" justifyContent="flex-end" p={2}>
       {/* Icons  */}
       <Box display="flex">
         <IconButton
@@ -41,12 +27,6 @@ const Topbar = () => {
           ) : (
             <LightModeOutlined />
           )}
-        </IconButton>
-        <IconButton type="button" sx={{ p: 1 }}>
-          <SettingsOutlined />
-        </IconButton>
-        <IconButton type="button" sx={{ p: 1 }}>
-          <PersonOutlined />
         </IconButton>
       </Box>
     </Box>

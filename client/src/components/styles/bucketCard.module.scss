@@ -1,0 +1,109 @@
+.bucket-card {
+  position: relative;
+  width: 14rem;
+  height: auto;
+  border-radius: 0.5rem;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16), 0px 3px 6px rgba(0, 0, 0, 0.23);
+  animation: fadein 0.5s linear;
+  transition: all 0.5s ease-in-out linear;
+  -webkit-animation: fadein 0.5s linear;
+  header {
+    width: 5rem;
+    height: fit-content;
+    padding: 0px 1.25rem 2rem 1.25rem;
+    background: transparent;
+    color: #000000;
+    margin-top: 1rem;  
+    text-align: center;
+    a {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      text-align: center;
+      position: relative;
+      img {
+        width: 7.5rem;
+        max-width: 100%;
+        border-radius: 50%;
+        transition: box-shadow 0.3s ease;
+        box-shadow: 0px 0px 0px 8px rgba(0, 0, 0, 0.06);
+      }
+      h1 {
+        color: #3da58a;
+        font-size: 1.35rem;
+        text-transform: capitalize;
+        font-weight: 400;
+      }
+    }
+    a:hover>img {
+      box-shadow: 0px 0px 0px 12px rgba(0, 0, 0, 0.1);
+    }
+  }
+  .bucket-bio {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    float: right;
+    background: transparent;
+    color: #37474f;
+    font-weight: 500;
+    text-align: center;
+    border-radius: 0.5rem;
+  }
+  .bucket-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    button {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  }
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media screen and (min-height: 480px) {
+  .bucket-card {
+    header {
+      width: auto;
+      height: fit-content;
+      padding: 1rem 1.25rem;
+      border-radius: 0.5rem;
+      text-transform: capitalize;
+    }
+    .bucket-bio {
+      width: 100%;
+      height: fit-content;
+      padding: 1rem 1.25rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-transform: capitalize;
+      border-radius: 0.5rem;
+    }
+  }
+}
