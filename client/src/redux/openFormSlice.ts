@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const openSlice = createSlice({
-  name: "open",
+  name: "openBucketForm",
   initialState: {
     isOpen: false,
   },

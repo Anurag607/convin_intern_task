@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { updateCard } from "../scripts/cardUtils";
 import { useSelector, useDispatch } from "react-redux";
-import { closeCardForm } from "../redux/openCardFormSlice";
+import { closeCardUpdateForm } from "../redux/openCardFormSlice";
 import { setCurrentCardData } from "../redux/currentData";
 
 const placeholder = {
@@ -26,10 +26,10 @@ const UpdateCardForm = () => {
     JSON.parse(localStorage.getItem("auth") || "{}")
   );
   const { cardData } = useSelector((state: any) => state.currentData);
-  const { isCardFormOpen } = useSelector((state: any) => state.cardForm);
+  const { isCardUpdateFormOpen } = useSelector((state: any) => state.cardForm);
 
   const handleClose = () => {
-    dispatch(closeCardForm());
+    dispatch(closeCardUpdateForm());
   };
 
   // Function for handling input change
@@ -80,7 +80,7 @@ const UpdateCardForm = () => {
 
   return (
     <Box m="20px">
-      <Dialog open={isCardFormOpen} onClose={handleClose}>
+      <Dialog open={isCardUpdateFormOpen} onClose={handleClose}>
         {/* Form */}
         <DialogTitle>Update Card</DialogTitle>
         <DialogContent>

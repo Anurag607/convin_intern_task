@@ -23,6 +23,7 @@ import { setRowList, clearRowList } from "../redux/rowSelection";
 import Cards from "../components/Cards";
 import { Delete } from "@mui/icons-material";
 import { deleteManyCard } from "../scripts/cardUtils";
+import { closeCardAddForm, openCardAddForm } from "../redux/openCardFormSlice";
 
 // Styling attr. for the warning block...
 const styles = {
@@ -79,6 +80,7 @@ export default function CardDataGrid() {
     JSON.parse(localStorage.getItem("auth") || "{}")
   );
   const { isGridOpen } = useSelector((state: any) => state.openGrid);
+  const { isCardAddFormOpen } = useSelector((state: any) => state.cardForm);
   const { bucketId } = useSelector((state: any) => state.currentBucket);
   const { rowList } = useSelector((state: any) => state.selectedRowList);
   const dispatch = useDispatch();
@@ -91,17 +93,16 @@ export default function CardDataGrid() {
     details: "",
     url: "",
   });
-  const [open, setOpen] = React.useState(false);
   const warning = React.useRef<HTMLSpanElement>(null);
 
   // Function for opening the add card form...
   const handleClickOpen = () => {
-    setOpen(true);
+    dispatch(openCardAddForm());
   };
 
   // Function for closing the add card form...
   const CloseForm = () => {
-    setOpen(false);
+    dispatch(closeCardAddForm());
   };
 
   // Function to get all cards in the selected bucket...
@@ -202,9 +203,9 @@ export default function CardDataGrid() {
       .catch((err) => console.error(err.message));
   };
 
+  // Function for deleting selected cards...
   const handleDelete = () => {
     deleteManyCard(rowList);
-    dispatch(clearRowList());
   };
 
   return (
@@ -229,11 +230,10 @@ export default function CardDataGrid() {
               rows={cards}
               getRowId={(row) => row._id}
               onRowSelectionModelChange={(ids: any) => {
-                const selectedIDs = new Set(ids);
                 let selectedRowData = cards.filter((el: any) =>
-                  selectedIDs.has(el._id)
+                  ids.includes(el._id)
                 );
-                dispatch(setRowList([...rowList, ...selectedRowData]));
+                dispatch(setRowList(selectedRowData));
               }}
               rowHeight={138}
               columns={columns}
@@ -248,7 +248,7 @@ export default function CardDataGrid() {
               checkboxSelection
               disableRowSelectionOnClick
             />
-            {/* FAB button for adding new video card */}
+            {/* Button for adding new video card */}
             <Box display="flex" gap={5}>
               <Button
                 variant="contained"
@@ -259,6 +259,7 @@ export default function CardDataGrid() {
                 <GridAddIcon />
                 Add Card
               </Button>
+              {/* Button for deleting selected video card */}
               <Button
                 variant="contained"
                 aria-label="add-card"
@@ -270,7 +271,10 @@ export default function CardDataGrid() {
               </Button>
             </Box>
             {/* Form for adding new video card */}
-            <Dialog open={open} onClose={handleClose}>
+            <Dialog
+              open={isCardAddFormOpen}
+              onClose={() => dispatch(closeCardAddForm())}
+            >
               {/* Form */}
               <DialogTitle>New Card</DialogTitle>
               <DialogContent>
@@ -330,7 +334,9 @@ export default function CardDataGrid() {
                 >
                   Clear
                 </Button>
-                <Button onClick={handleClose}>Cancel</Button>
+                <Button onClick={() => dispatch(closeCardAddForm())}>
+                  Cancel
+                </Button>
                 <Button
                   onClick={() => {
                     HandleSubmit();

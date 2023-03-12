@@ -3,18 +3,30 @@ import { createSlice } from "@reduxjs/toolkit";
 const openCardFormSlice = createSlice({
   name: "openCardForm",
   initialState: {
-    isCardFormOpen: false,
+    isCardUpdateFormOpen: false,
+    isCardAddFormOpen: false,
   },
   reducers: {
-    openCardForm: (state) => {
-      state.isCardFormOpen = true;
+    openCardUpdateForm: (state) => {
+      state.isCardUpdateFormOpen = true;
     },
-    closeCardForm: (state) => {
-      state.isCardFormOpen = false;
+    closeCardUpdateForm: (state) => {
+      state.isCardUpdateFormOpen = false;
+    },
+    openCardAddForm: (state) => {
+      state.isCardAddFormOpen = true;
+    },
+    closeCardAddForm: (state) => {
+      state.isCardAddFormOpen = false;
     },
   },
 });
 
-export const { openCardForm, closeCardForm } = openCardFormSlice.actions;
+export const {
+  openCardUpdateForm,
+  closeCardUpdateForm,
+  openCardAddForm,
+  closeCardAddForm,
+} = openCardFormSlice.actions;
 
 export default openCardFormSlice.reducer;

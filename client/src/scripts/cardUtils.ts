@@ -51,15 +51,7 @@ const deleteCard = (
 };
 
 const deleteManyCard = (rows: any) => {
-  const cards: any = [];
-  rows.forEach((row: any) => {
-    let flag = true;
-    cards.forEach((card: any) => {
-      if (card._id !== undefined && card._id === row._id) flag = false;
-    });
-    if (flag) cards.push(row);
-  });
-  cards.forEach((card: any) => {
+  rows.forEach((card: any) => {
     let { _id, _v, updatedAt, createdAt, ...body } = card;
     deleteCard(_id, body);
   });

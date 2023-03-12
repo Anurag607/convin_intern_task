@@ -20,7 +20,7 @@ import { openForm } from "../redux/openFormSlice";
 import { openGrid } from "../redux/openGridSlice";
 import { setCurrentBucket } from "../redux/currentBucketSlice";
 import { deleteCard } from "../scripts/cardUtils";
-import { openCardForm } from "../redux/openCardFormSlice";
+import { openCardUpdateForm } from "../redux/openCardFormSlice";
 import { setCurrentCard } from "../redux/currentCardSlice";
 import { setUrl, openIFrame } from "../redux/iframe";
 import { setCurrentBucketData, setCurrentCardData } from "../redux/currentData";
@@ -147,7 +147,7 @@ const MediaCard = (props: propTypes) => {
             onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
               props.reduxDispatch(setCurrentCardData(props.data));
               props.reduxDispatch(setCurrentCard(props.data._id));
-              props.reduxDispatch(openCardForm());
+              props.reduxDispatch(openCardUpdateForm());
             }}
           >
             <Update

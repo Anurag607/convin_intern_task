@@ -34,7 +34,7 @@ const deleteCard = async (req, res) => {
     try {
         const CardList = await Card.findById(req.params.id)
         if (CardList.userId.valueOf() === req.body.userId) {
-            await Card.deleteOne({ bucketName: req.body.bucketName });
+            await Card.deleteOne({ cardName: req.body.cardName });
             res.status(200).json({ message: 'the Card is deleted' })
         } else {
             res.status(403).json({ message: 'you can only delete your Card' })
